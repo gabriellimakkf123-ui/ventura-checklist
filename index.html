@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,800&family=Outfit:ital,wght@0,400;0,600;0,700;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
   <!-- Biblioteca para Geração de PDF Colorido -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body data-theme="corporate">
   <!-- Cabeçalho Principal (Não impresso) -->
@@ -89,14 +89,15 @@
         </div>
       </div>
 
-      <!-- Bloco de Informações Reorganizado Conforme Especificado pelo Usuário -->
+      <!-- Bloco de Informações Reorganizado em 3 Blocos Claros -->
       <section class="doc-section info-section">
         
-        <!-- Linha 1: Dados da Empresa e Técnico -->
+        <!-- BLOCO 1: DADOS DA EMPRESA & TÉCNICO RESPONSÁVEL -->
+        <div class="block-label">BLOCO 1 - DADOS DA EMPRESA & TÉCNICO</div>
         <div class="form-grid grid-row-3">
           <div class="form-group">
             <label>EMPRESA:</label>
-            <input type="text" id="fieldEmpresa" placeholder="Ex: Ventura Adventure / Revenda" autocomplete="off">
+            <input type="text" id="fieldEmpresa" placeholder="Ventura Adventure / Revenda" autocomplete="off">
           </div>
           <div class="form-group">
             <label>CNPJ:</label>
@@ -104,15 +105,16 @@
           </div>
           <div class="form-group">
             <label>TÉCNICO RESPONSÁVEL:</label>
-            <input type="text" id="fieldTecnico" placeholder="Nome do Técnico Inspeção" autocomplete="off">
+            <input type="text" id="fieldTecnico" placeholder="Nome do Técnico Responsável" autocomplete="off">
           </div>
         </div>
 
-        <!-- Linha 2: Dados do Cliente -->
-        <div class="form-grid grid-row-3 margin-top-sm">
+        <!-- BLOCO 2: DADOS DO CLIENTE -->
+        <div class="block-label margin-top-xs">BLOCO 2 - DADOS DO CLIENTE</div>
+        <div class="form-grid grid-row-3">
           <div class="form-group">
             <label>CLIENTE:</label>
-            <input type="text" id="fieldName" placeholder="Nome do Cliente" autocomplete="off">
+            <input type="text" id="fieldName" placeholder="Nome Completo do Cliente" autocomplete="off">
           </div>
           <div class="form-group">
             <label>TELEFONE:</label>
@@ -120,19 +122,20 @@
           </div>
           <div class="form-group">
             <label>ENDEREÇO:</label>
-            <input type="text" id="fieldAddress" placeholder="Rua, Número, Bairro, Cidade/UF" autocomplete="off">
+            <input type="text" id="fieldAddress" placeholder="Endereço Completo, Cidade/UF" autocomplete="off">
           </div>
         </div>
 
-        <!-- Linha 3: Dados do Veículo & Combustível -->
-        <div class="form-grid grid-row-vehicle margin-top-sm">
+        <!-- BLOCO 3: DADOS DO VEÍCULO & COMBUSTÍVEL -->
+        <div class="block-label margin-top-xs">BLOCO 3 - DADOS DO VEÍCULO E COMBUSTÍVEL</div>
+        <div class="form-grid grid-row-vehicle">
           <div class="form-group">
             <label>MODELO:</label>
             <input type="text" id="fieldModel" placeholder="Ex: Ventura 400 / CAYO 110cc" autocomplete="off">
           </div>
           <div class="form-group">
             <label>COR:</label>
-            <input type="text" id="fieldColor" placeholder="Ex: Vermelho" autocomplete="off">
+            <input type="text" id="fieldColor" placeholder="Ex: Vermelho / Amarelo" autocomplete="off">
           </div>
           <div class="form-group">
             <label>CHASSI (VIN):</label>
@@ -154,7 +157,7 @@
         </div>
       </section>
 
-      <!-- Legenda de Estados dos Componentes -->
+      <!-- Legenda de Estados dos Componentes (Mantida conforme solicitado) -->
       <div class="status-legend-bar">
         <span class="legend-title">LEGENDA:</span>
         <span class="legend-item"><strong class="st-ok">OK</strong> - Estado adequado</span>
@@ -305,6 +308,6 @@
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>

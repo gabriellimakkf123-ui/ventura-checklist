@@ -1,6 +1,6 @@
 /* ==========================================================================
    VENTURA ADVENTURE SISTEMAS - CHECK-LIST DE VEÍCULOS
-   Design System, Reorganização de Campos & Paleta Ventura Adventure
+   Design System, Demarcação Clara dos 3 Blocos de Cabeçalho & Paleta Ventura
    ========================================================================== */
 
 :root {
@@ -328,6 +328,19 @@ body {
   flex-direction: column;
 }
 
+.block-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--adventure-orange);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.margin-top-xs {
+  margin-top: 0.35rem;
+}
+
 .form-grid {
   display: grid;
   gap: 0.4rem;
@@ -341,10 +354,6 @@ body {
 .grid-row-vehicle {
   grid-template-columns: 1.3fr 1fr 1.5fr 1fr 2.2fr;
   align-items: center;
-}
-
-.margin-top-sm {
-  margin-top: 0.35rem;
 }
 
 .form-group {
@@ -942,6 +951,12 @@ body {
 
   .doc-header {
     border-bottom-color: #ea580c !important;
+  }
+
+  .block-label {
+    color: #ea580c !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .form-group {
