@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,800&family=Outfit:ital,wght@0,400;0,600;0,700;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
   <!-- Biblioteca para Geração de PDF Colorido -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <link rel="stylesheet" href="styles.css?v=2">
+  <link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body data-theme="corporate">
   <!-- Cabeçalho Principal (Não impresso) -->
@@ -89,7 +89,7 @@
         </div>
       </div>
 
-      <!-- Bloco de Informações Reorganizado em 3 Blocos Claros -->
+      <!-- Bloco de Informações Reorganizado e com Amplo Espaço de Digitacao -->
       <section class="doc-section info-section">
         
         <!-- BLOCO 1: DADOS DA EMPRESA & TÉCNICO RESPONSÁVEL -->
@@ -126,24 +126,27 @@
           </div>
         </div>
 
-        <!-- BLOCO 3: DADOS DO VEÍCULO & COMBUSTÍVEL -->
+        <!-- BLOCO 3: DADOS DO VEÍCULO E COMBUSTÍVEL (Dividido em 2 linhas espaçosas) -->
         <div class="block-label margin-top-xs">BLOCO 3 - DADOS DO VEÍCULO E COMBUSTÍVEL</div>
-        <div class="form-grid grid-row-vehicle">
+        <div class="form-grid grid-vehicle-top">
           <div class="form-group">
             <label>MODELO:</label>
-            <input type="text" id="fieldModel" placeholder="Ex: Ventura 400 / CAYO 110cc" autocomplete="off">
+            <input type="text" id="fieldModel" placeholder="Ex: Ventura 400 4x4 / CAYO 110cc" autocomplete="off">
           </div>
           <div class="form-group">
             <label>COR:</label>
-            <input type="text" id="fieldColor" placeholder="Ex: Vermelho / Amarelo" autocomplete="off">
+            <input type="text" id="fieldColor" placeholder="Ex: Vermelho" autocomplete="off">
           </div>
           <div class="form-group">
             <label>CHASSI (VIN):</label>
             <input type="text" id="fieldChassis" placeholder="Ex: 9BW..." autocomplete="off">
           </div>
+        </div>
+
+        <div class="form-grid grid-vehicle-bottom margin-top-xs">
           <div class="form-group">
             <label>KM / HORAS:</label>
-            <input type="text" id="fieldKm" placeholder="Ex: 0 KM" autocomplete="off">
+            <input type="text" id="fieldKm" placeholder="Ex: 0 KM / 0.5h" autocomplete="off">
           </div>
           <div class="form-group fuel-group">
             <label>Nível de combustível (circular):</label>
@@ -155,9 +158,10 @@
             </div>
           </div>
         </div>
+
       </section>
 
-      <!-- Legenda de Estados dos Componentes (Mantida conforme solicitado) -->
+      <!-- Legenda de Estados dos Componentes -->
       <div class="status-legend-bar">
         <span class="legend-title">LEGENDA:</span>
         <span class="legend-item"><strong class="st-ok">OK</strong> - Estado adequado</span>
@@ -308,6 +312,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=2"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>

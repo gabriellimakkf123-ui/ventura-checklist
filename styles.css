@@ -1,6 +1,6 @@
 /* ==========================================================================
    VENTURA ADVENTURE SISTEMAS - CHECK-LIST DE VEÍCULOS
-   Design System, Demarcação Clara dos 3 Blocos de Cabeçalho & Paleta Ventura
+   Design System, Reorganização Espaçosa dos Blocos do Cabeçalho
    ========================================================================== */
 
 :root {
@@ -270,13 +270,13 @@ body {
   width: 100%;
   max-width: 860px;
   min-height: 1150px;
-  padding: 2.2rem 2.5rem;
+  padding: 2rem 2.2rem;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   border: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 0.75rem;
 }
 
 /* Cabeçalho do Documento Imprimível */
@@ -285,7 +285,7 @@ body {
   align-items: center;
   justify-content: space-between;
   border-bottom: 3px solid var(--adventure-orange);
-  padding-bottom: 0.6rem;
+  padding-bottom: 0.5rem;
 }
 
 .doc-brand {
@@ -294,8 +294,8 @@ body {
 }
 
 .doc-brand-logo {
-  height: 55px;
-  max-width: 250px;
+  height: 52px;
+  max-width: 240px;
   object-fit: contain;
 }
 
@@ -347,12 +347,18 @@ body {
 }
 
 .grid-row-3 {
-  grid-template-columns: 1.5fr 1.2fr 1.5fr;
+  grid-template-columns: 1.4fr 1.2fr 1.6fr;
   align-items: center;
 }
 
-.grid-row-vehicle {
-  grid-template-columns: 1.3fr 1fr 1.5fr 1fr 2.2fr;
+/* Bloco 3: Divisão em 2 linhas com amplo espaço para digitação */
+.grid-vehicle-top {
+  grid-template-columns: 1.4fr 1.1fr 1.5fr;
+  align-items: center;
+}
+
+.grid-vehicle-bottom {
+  grid-template-columns: 1.2fr 2.2fr;
   align-items: center;
 }
 
@@ -360,7 +366,7 @@ body {
   display: flex;
   align-items: center;
   border: 1px solid var(--text-dark);
-  padding: 0.35rem 0.5rem;
+  padding: 0.35rem 0.55rem;
   background: #f8fafc;
   border-radius: 3px;
 }
@@ -378,7 +384,7 @@ body {
   background: transparent;
   width: 100%;
   font-family: var(--font-primary);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: #000000;
   outline: none;
@@ -398,17 +404,17 @@ body {
 
 .fuel-options {
   display: flex;
-  gap: 0.4rem;
+  gap: 0.5rem;
   width: 100%;
   justify-content: space-between;
 }
 
 .fuel-radio {
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 3px;
   cursor: pointer;
 }
 
@@ -544,23 +550,23 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1.2rem;
+  padding: 1rem;
   border: 1.5px dashed #fdba74;
   border-radius: var(--radius-sm);
   background: #fff7ed;
   color: #64748b;
   text-align: center;
-  min-height: 95px;
+  min-height: 85px;
   width: 100%;
 }
 
 .blank-icon {
-  font-size: 1.4rem;
-  margin-bottom: 0.2rem;
+  font-size: 1.3rem;
+  margin-bottom: 0.1rem;
 }
 
 .blank-text {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: #9a3412;
   letter-spacing: 0.5px;
@@ -574,7 +580,7 @@ body {
 }
 
 .agreement-section {
-  margin: 0.2rem 0;
+  margin: 0.15rem 0;
 }
 
 .agreement-text {
@@ -608,17 +614,17 @@ body {
   font-size: 0.75rem;
   color: #0f172a;
   resize: vertical;
-  min-height: 40px;
+  min-height: 38px;
 }
 
 .signature-section {
-  margin-top: 0.3rem;
+  margin-top: 0.25rem;
 }
 
 .signature-agreement-line {
   font-size: 0.72rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   color: var(--text-dark);
 }
 
@@ -637,7 +643,7 @@ body {
 .canvas-wrapper {
   position: relative;
   width: 100%;
-  height: 70px;
+  height: 65px;
   background: #f8fafc;
   border: 1px dashed #cbd5e1;
   border-radius: 4px;
@@ -665,7 +671,7 @@ body {
   width: 100%;
   height: 1px;
   background: var(--text-dark);
-  margin-top: 0.4rem;
+  margin-top: 0.35rem;
 }
 
 .sig-title {
