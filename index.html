@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,800&family=Outfit:ital,wght@0,400;0,600;0,700;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
   <!-- Biblioteca para Geração de PDF Colorido -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body data-theme="corporate">
   <!-- Cabeçalho Principal (Não impresso) -->
@@ -211,7 +211,7 @@
       <!-- Observações -->
       <section class="doc-section obs-section">
         <label class="obs-label">OBSERVAÇÕES:</label>
-        <textarea id="fieldObs" rows="3" placeholder="Detalhes de eventuais avarias (RD, AD, DD, QD, FT), fotos ou ressalvas..."></textarea>
+        <textarea id="fieldObs" rows="2" placeholder="Detalhes de eventuais avarias (RD, AD, DD, QD, FT), fotos ou ressalvas..."></textarea>
       </section>
 
       <!-- Bloco de Assinaturas -->
@@ -222,7 +222,7 @@
           <!-- Assinatura Transportador -->
           <div class="signature-box">
             <div class="canvas-wrapper">
-              <canvas id="canvasTransportador" width="400" height="100"></canvas>
+              <canvas id="canvasTransportador" width="400" height="90"></canvas>
               <button class="clear-canvas-btn no-print" data-target="canvasTransportador">Limpar</button>
             </div>
             <div class="sig-line"></div>
@@ -236,7 +236,7 @@
           <!-- Assinatura Revendedor -->
           <div class="signature-box">
             <div class="canvas-wrapper">
-              <canvas id="canvasRevendedor" width="400" height="100"></canvas>
+              <canvas id="canvasRevendedor" width="400" height="90"></canvas>
               <button class="clear-canvas-btn no-print" data-target="canvasRevendedor">Limpar</button>
             </div>
             <div class="sig-line"></div>
@@ -375,6 +375,6 @@
   </div>
 
   <script src="database.js?v=1"></script>
-  <script src="app.js?v=5"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>
