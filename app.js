@@ -1,6 +1,6 @@
 /* ==========================================================================
    VENTURA ADVENTURE SISTEMAS - APP.JS
-   Categorias Atualizadas: ATV's - Linhai, UTV's - Linhai, ATV's - Kayo, MOTO - Kayo
+   Lógica do Check-List, Integração com Banco de Dados, Histórico e PDF
    ========================================================================== */
 
 // Modelos Padrão para cada linha de veículo Ventura, Linhai e Kayo
@@ -160,6 +160,7 @@ const DEFAULT_TEMPLATES = {
 // Estado Atual do Sistema
 let currentLine = 'atv';
 let currentEditingLine = 'atv';
+let activeChecklistId = null; // ID se estiver editando um registro existente
 let templatesData = JSON.parse(localStorage.getItem('ventura_templates')) || JSON.parse(JSON.stringify(DEFAULT_TEMPLATES));
 let componentStatusMap = {};
 
@@ -171,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderDiagram();
   initCanvasSignatures();
   initModalEvents();
+  initHistoryModalEvents();
   initActionButtons();
 });
 
@@ -349,37 +351,19 @@ function setupCanvas(canvasId) {
   canvas.addEventListener('touchend', stopDrawing);
 }
 
-// Botões Principais & Geração de PDF Colorido
+// Botões Principais & Ações de Banco de Dados
 function initActionButtons() {
-  // Novo Check-List
+  // Novo Check-List Vazio
   document.getElementById('btnNewChecklist').addEventListener('click', () => {
     if (confirm("Deseja limpar todos os campos do check-list atual?")) {
-      document.getElementById('fieldEmpresa').value = '';
-      document.getElementById('fieldCnpj').value = '';
-      document.getElementById('fieldTecnico').value = '';
-      document.getElementById('fieldName').value = '';
-      document.getElementById('fieldPhone').value = '';
-      document.getElementById('fieldAddress').value = '';
-      document.getElementById('fieldModel').value = '';
-      document.getElementById('fieldColor').value = '';
-      document.getElementById('fieldChassis').value = '';
-      document.getElementById('fieldKm').value = '';
-      document.getElementById('fieldObs').value = '';
-      document.getElementById('sigTranspName').value = '';
-      document.getElementById('sigTranspRg').value = '';
-      document.getElementById('sigRevendName').value = '';
-      document.getElementById('sigRevendRg').value = '';
-
-      document.querySelectorAll('input[name="fuelLevel"]').forEach(r => r.checked = false);
-
-      ['canvasTransportador', 'canvasRevendedor'].forEach(id => {
-        const c = document.getElementById(id);
-        c.getContext('2d').clearRect(0, 0, c.width, c.height);
-      });
-
-      componentStatusMap = {};
-      initComponentTables();
+      clearFormFields();
+      activeChecklistId = null;
     }
+  });
+
+  // Salvar no Banco de Dados
+  document.getElementById('btnSaveToDB').addEventListener('click', async () => {
+    await saveFormToDatabase();
   });
 
   // Baixar PDF Colorido
@@ -393,7 +377,216 @@ function initActionButtons() {
   });
 }
 
-// Função para Baixar PDF Colorido de Alta Resolução
+function clearFormFields() {
+  document.getElementById('fieldEmpresa').value = '';
+  document.getElementById('fieldCnpj').value = '';
+  document.getElementById('fieldTecnico').value = '';
+  document.getElementById('fieldName').value = '';
+  document.getElementById('fieldPhone').value = '';
+  document.getElementById('fieldAddress').value = '';
+  document.getElementById('fieldModel').value = '';
+  document.getElementById('fieldColor').value = '';
+  document.getElementById('fieldChassis').value = '';
+  document.getElementById('fieldKm').value = '';
+  document.getElementById('fieldObs').value = '';
+  document.getElementById('sigTranspName').value = '';
+  document.getElementById('sigTranspRg').value = '';
+  document.getElementById('sigRevendName').value = '';
+  document.getElementById('sigRevendRg').value = '';
+
+  document.querySelectorAll('input[name="fuelLevel"]').forEach(r => r.checked = false);
+
+  ['canvasTransportador', 'canvasRevendedor'].forEach(id => {
+    const c = document.getElementById(id);
+    c.getContext('2d').clearRect(0, 0, c.width, c.height);
+  });
+
+  componentStatusMap = {};
+  initComponentTables();
+}
+
+async function saveFormToDatabase() {
+  const selectedFuel = document.querySelector('input[name="fuelLevel"]:checked');
+  const fuelValue = selectedFuel ? selectedFuel.value : '';
+
+  const cTransp = document.getElementById('canvasTransportador');
+  const cRevend = document.getElementById('canvasRevendedor');
+
+  const recordData = {
+    id: activeChecklistId,
+    empresa: document.getElementById('fieldEmpresa').value.trim(),
+    cnpj: document.getElementById('fieldCnpj').value.trim(),
+    tecnico: document.getElementById('fieldTecnico').value.trim(),
+    cliente: document.getElementById('fieldName').value.trim(),
+    telefone: document.getElementById('fieldPhone').value.trim(),
+    endereco: document.getElementById('fieldAddress').value.trim(),
+    modelo: document.getElementById('fieldModel').value.trim(),
+    cor: document.getElementById('fieldColor').value.trim(),
+    chassis: document.getElementById('fieldChassis').value.trim(),
+    km: document.getElementById('fieldKm').value.trim(),
+    fuel: fuelValue,
+    line: currentLine,
+    statusMap: componentStatusMap,
+    obs: document.getElementById('fieldObs').value.trim(),
+    sigTransp: cTransp.toDataURL(),
+    sigRevend: cRevend.toDataURL()
+  };
+
+  const savedRecord = await window.venturaDB.saveChecklist(recordData);
+  activeChecklistId = savedRecord.id;
+
+  alert(`✅ Check-List salvo com sucesso no Banco de Dados!\nID: ${savedRecord.id}`);
+}
+
+// Lógica do Modal de Histórico do Banco de Dados
+function initHistoryModalEvents() {
+  const modal = document.getElementById('historyModal');
+  const btnOpen = document.getElementById('btnOpenHistory');
+  const btnCloseHeader = document.getElementById('btnCloseHistoryModal');
+  const btnCloseFooter = document.getElementById('btnCloseHistoryFooter');
+
+  btnOpen.addEventListener('click', () => {
+    renderHistoryTable();
+    modal.classList.add('active');
+  });
+
+  [btnCloseHeader, btnCloseFooter].forEach(btn => {
+    btn.addEventListener('click', () => modal.classList.remove('active'));
+  });
+
+  // Busca e Filtros
+  document.getElementById('dbSearchInput').addEventListener('input', () => renderHistoryTable());
+  document.getElementById('dbCategoryFilter').addEventListener('change', () => renderHistoryTable());
+
+  // Exportar Backup
+  document.getElementById('btnExportDB').addEventListener('click', () => {
+    window.venturaDB.exportBackupJSON();
+  });
+
+  // Importar Backup
+  document.getElementById('btnImportDB').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const ok = window.venturaDB.importBackupJSON(evt.target.result);
+      if (ok) {
+        alert('Backup importado com sucesso!');
+        renderHistoryTable();
+      } else {
+        alert('Erro ao importar backup JSON.');
+      }
+    };
+    reader.readAsText(file);
+  });
+}
+
+function renderHistoryTable() {
+  const query = document.getElementById('dbSearchInput').value;
+  const categoryFilter = document.getElementById('dbCategoryFilter').value;
+  const tbody = document.getElementById('dbTableBody');
+
+  const records = window.venturaDB.getChecklists(query, categoryFilter);
+
+  if (records.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" style="text-align: center; padding: 2rem; color: #94a3b8;">
+          Nenhum check-list encontrado no banco de dados.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  const categoryNames = {
+    atv: "ATV's - Linhai",
+    utv: "UTV's - Linhai",
+    infantil_quad: "ATV's - Kayo",
+    infantil_moto: "MOTO - Kayo"
+  };
+
+  tbody.innerHTML = records.map(r => {
+    const formattedDate = new Date(r.created_at).toLocaleString('pt-BR');
+    const catLabel = categoryNames[r.categoria] || r.categoria;
+
+    return `
+      <tr>
+        <td>${formattedDate}</td>
+        <td><strong>${escapeHtml(r.cliente || 'Sem Nome')}</strong></td>
+        <td><span class="badge-cat">${escapeHtml(catLabel)}</span> <br><small>${escapeHtml(r.modelo || '')}</small></td>
+        <td><code>${escapeHtml(r.chassi || '-')}</code></td>
+        <td>${escapeHtml(r.tecnico || '-')}</td>
+        <td>
+          <div class="db-action-btns">
+            <button class="db-act-btn load" onclick="loadChecklistFromDB('${r.id}')" title="Carregar no formulário">👁️ Ver</button>
+            <button class="db-act-btn pdf" onclick="downloadPDFFromDB('${r.id}')" title="Baixar PDF">📥 PDF</button>
+            <button class="db-act-btn del" onclick="deleteChecklistFromDB('${r.id}')" title="Excluir">🗑️</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// Funções globais para botões inline da tabela de histórico
+window.loadChecklistFromDB = function(id) {
+  const r = window.venturaDB.getChecklistById(id);
+  if (!r) return;
+
+  activeChecklistId = r.id;
+
+  // Selecionar linha de veículo
+  if (r.categoria && r.categoria !== currentLine) {
+    currentLine = r.categoria;
+    document.querySelectorAll('.line-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-line') === currentLine);
+    });
+    loadLineTemplate(currentLine);
+  }
+
+  // Preencher campos
+  document.getElementById('fieldEmpresa').value = r.empresa || '';
+  document.getElementById('fieldCnpj').value = r.cnpj || '';
+  document.getElementById('fieldTecnico').value = r.tecnico || '';
+  document.getElementById('fieldName').value = r.cliente || '';
+  document.getElementById('fieldPhone').value = r.telefone || '';
+  document.getElementById('fieldAddress').value = r.endereco || '';
+  document.getElementById('fieldModel').value = r.modelo || '';
+  document.getElementById('fieldColor').value = r.cor || '';
+  document.getElementById('fieldChassis').value = r.chassi || '';
+  document.getElementById('fieldKm').value = r.km || '';
+  document.getElementById('fieldObs').value = r.observacoes || '';
+
+  // Combustível
+  document.querySelectorAll('input[name="fuelLevel"]').forEach(rad => {
+    rad.checked = (rad.value === r.combustivel);
+  });
+
+  // Restaurar status dos componentes
+  componentStatusMap = r.statusMap || {};
+  initComponentTables();
+
+  // Fechar modal de histórico
+  document.getElementById('historyModal').classList.remove('active');
+};
+
+window.downloadPDFFromDB = function(id) {
+  window.loadChecklistFromDB(id);
+  setTimeout(() => {
+    generateColoredPDF();
+  }, 300);
+};
+
+window.deleteChecklistFromDB = function(id) {
+  if (confirm("Tem certeza que deseja excluir este check-list do banco de dados?")) {
+    window.venturaDB.deleteChecklist(id);
+    renderHistoryTable();
+  }
+};
+
+// Função para Baixar PDF Colorido
 function generateColoredPDF() {
   const element = document.getElementById('printablePaper');
   const clientName = document.getElementById('fieldName').value.trim() || 'Cliente';

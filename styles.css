@@ -1,6 +1,6 @@
 /* ==========================================================================
    VENTURA ADVENTURE SISTEMAS - CHECK-LIST DE VEÍCULOS
-   Design System, Reorganização Espaçosa dos Blocos do Cabeçalho
+   Design System, Banco de Dados, Histórico & Paleta Ventura Adventure
    ========================================================================== */
 
 :root {
@@ -351,7 +351,6 @@ body {
   align-items: center;
 }
 
-/* Bloco 3: Divisão em 2 linhas com amplo espaço para digitação */
 .grid-vehicle-top {
   grid-template-columns: 1.4fr 1.1fr 1.5fr;
   align-items: center;
@@ -706,6 +705,121 @@ body {
   width: 100%;
   font-size: 0.72rem;
   outline: none;
+}
+
+/* ==========================================================================
+   MODAL DE BANCO DE DADOS & HISTÓRICO (NO-PRINT)
+   ========================================================================== */
+
+.modal-card.wide-modal {
+  max-width: 1000px;
+  width: 95%;
+}
+
+.db-search-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.db-search-bar input {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(15, 23, 42, 0.6);
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.db-search-bar select {
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(15, 23, 42, 0.6);
+  color: #ffffff;
+  font-size: 0.85rem;
+}
+
+.db-table-wrapper {
+  max-height: 380px;
+  overflow-y: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.4);
+}
+
+.db-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.82rem;
+}
+
+.db-table th {
+  background: var(--adventure-dark);
+  color: var(--adventure-amber);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  border-bottom: 2px solid rgba(234, 88, 12, 0.3);
+  position: sticky;
+  top: 0;
+}
+
+.db-table td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+}
+
+.db-table tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.badge-cat {
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: rgba(234, 88, 12, 0.2);
+  color: #fb923c;
+  border: 1px solid rgba(234, 88, 12, 0.3);
+}
+
+.db-action-btns {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.db-act-btn {
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.db-act-btn.load { background: #0284c7; color: #ffffff; }
+.db-act-btn.pdf { background: #ea580c; color: #ffffff; }
+.db-act-btn.del { background: #dc2626; color: #ffffff; }
+
+.db-modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.backup-btn-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.upload-btn-label {
+  display: inline-flex;
+  margin: 0;
 }
 
 /* ==========================================================================

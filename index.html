@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,800&family=Outfit:ital,wght@0,400;0,600;0,700;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
   <!-- Biblioteca para Geração de PDF Colorido -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body data-theme="corporate">
   <!-- Cabeçalho Principal (Não impresso) -->
@@ -52,6 +52,10 @@
 
       <!-- Ações do Sistema -->
       <div class="header-actions">
+        <button id="btnOpenHistory" class="action-btn secondary" title="Ver Histórico no Banco de Dados">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          <span>📁 Histórico (Nuvem)</span>
+        </button>
         <button id="btnEditTemplate" class="action-btn secondary" title="Personalizar Itens e Termos">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
           <span>Editar Modelo</span>
@@ -60,9 +64,13 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"></path></svg>
           <span>Novo</span>
         </button>
+        <button id="btnSaveToDB" class="action-btn primary" title="Salvar Registro no Banco de Dados">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+          <span>Salvar no Banco</span>
+        </button>
         <button id="btnDownloadPDF" class="action-btn primary" title="Baixar Arquivo PDF Colorido">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          <span>Baixar PDF Colorido</span>
+          <span>Baixar PDF</span>
         </button>
         <button id="btnPrint" class="action-btn secondary" title="Imprimir Documento">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
@@ -89,7 +97,7 @@
         </div>
       </div>
 
-      <!-- Bloco de Informações Reorganizado e com Amplo Espaço de Digitacao -->
+      <!-- Bloco de Informações Reorganizado em 3 Blocos Claros -->
       <section class="doc-section info-section">
         
         <!-- BLOCO 1: DADOS DA EMPRESA & TÉCNICO RESPONSÁVEL -->
@@ -244,6 +252,60 @@
     </div>
   </main>
 
+  <!-- Modal de Banco de Dados / Histórico de Vistorias (no-print) -->
+  <div class="modal-overlay no-print" id="historyModal">
+    <div class="modal-card wide-modal">
+      <div class="modal-header">
+        <h2>📁 Banco de Dados - Histórico de Check-Lists Salvos</h2>
+        <button class="modal-close" id="btnCloseHistoryModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Barra de Busca & Filtros -->
+        <div class="db-search-bar">
+          <input type="text" id="dbSearchInput" placeholder="🔍 Pesquisar por Cliente, Chassi (VIN), Técnico, Modelo ou Empresa...">
+          <select id="dbCategoryFilter">
+            <option value="all">Todas as Linhas</option>
+            <option value="atv">ATV's - Linhai</option>
+            <option value="utv">UTV's - Linhai</option>
+            <option value="infantil_quad">ATV's - Kayo</option>
+            <option value="infantil_moto">MOTO - Kayo</option>
+          </select>
+        </div>
+
+        <!-- Tabela de Registros Salvos -->
+        <div class="db-table-wrapper">
+          <table class="db-table">
+            <thead>
+              <tr>
+                <th>Data / Hora</th>
+                <th>Cliente</th>
+                <th>Modelo / Linha</th>
+                <th>Chassi (VIN)</th>
+                <th>Técnico</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="dbTableBody">
+              <!-- Registros injetados via JS -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+      <div class="modal-footer db-modal-footer">
+        <div class="backup-btn-group">
+          <button id="btnExportDB" class="action-btn secondary" title="Exportar cópia de segurança em JSON">📥 Baixar Backup DB (JSON)</button>
+          <label class="action-btn secondary upload-btn-label">
+            📤 Importar Backup DB
+            <input type="file" id="btnImportDB" accept=".json" style="display:none;">
+          </label>
+        </div>
+        <button class="action-btn primary" id="btnCloseHistoryFooter">Fechar</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal de Edição de Modelo / Itens / Termos (no-print) -->
   <div class="modal-overlay no-print" id="editModal">
     <div class="modal-card">
@@ -312,6 +374,7 @@
     </div>
   </div>
 
-  <script src="app.js?v=4"></script>
+  <script src="database.js?v=1"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>
