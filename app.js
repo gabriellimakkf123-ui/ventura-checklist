@@ -1,13 +1,13 @@
 /* ==========================================================================
    VENTURA ADVENTURE SISTEMAS - APP.JS
-   Lógica do Check-List, Edição, Assinaturas e Exportação PDF Colorido
+   Categorias Atualizadas: ATV's - Linhai, UTV's - Linhai, ATV's - Kayo, MOTO - Kayo
    ========================================================================== */
 
-// Modelos Padrão para cada linha de veículo Ventura e CAYO
+// Modelos Padrão para cada linha de veículo Ventura, Linhai e Kayo
 const DEFAULT_TEMPLATES = {
   atv: {
     title: "CHECK LIST – TRANSPORTE DE VEÍCULO NOVO",
-    subtitle: "LINHA QUADRICICLOS ADULTOS VENTURA (ATV)",
+    subtitle: "LINHA ATV's – LINHAI",
     agreement: "Estamos cientes dos itens observados na pintura, acessórios e demais componentes, ficando desta forma a VENTURA isenta de qualquer observação de avaria ou falta de componentes destacados neste conhecimento de entrega, não cabendo reclamações posteriores.",
     left: [
       "Paralama dianteiro direito",
@@ -48,76 +48,10 @@ const DEFAULT_TEMPLATES = {
       "Tampa compartimento traseiro"
     ]
   },
-  infantil_quad: {
-    title: "CHECK LIST – TRANSPORTE DE VEÍCULO NOVO",
-    subtitle: "LINHA CAYO – QUADRICICLOS INFANTIS",
-    agreement: "Estamos cientes dos itens observados no quadriciclo infantil CAYO, incluindo dispositivos de segurança obrigatórios (limitador de velocidade e trava de segurança/tether), acessórios e lataria, ficando a VENTURA isenta de qualquer reclamação posterior à entrega.",
-    left: [
-      "Paralama dianteiro direito",
-      "Paralama dianteiro esquerdo",
-      "Paralama traseiro direito",
-      "Paralama traseiro esquerdo",
-      "Carenagem lateral direita",
-      "Carenagem lateral esquerda",
-      "Parachoque dianteiro",
-      "Banco CAYO",
-      "Protetores de pé fechados (Footwells)",
-      "Ferramentas de ajuste",
-      "Limitador de velocidade no acelerador",
-      "Chave / Trava de segurança (Tether switch)"
-    ],
-    right: [
-      "Chave de partida",
-      "Painel / Indicadores LED",
-      "Pintura em Geral",
-      "Tampa do tanque com trava",
-      "Rodas / Pneus infantis",
-      "Manual do Proprietário CAYO",
-      "Bateria 12V",
-      "Farol dianteiro",
-      "Lanterna traseira",
-      "Comandos do guidão / Freios",
-      "Manopla do freio / trava de estacionamento",
-      "Kit de adesivos decorativos CAYO"
-    ]
-  },
-  infantil_moto: {
-    title: "CHECK LIST – TRANSPORTE DE VEÍCULO NOVO",
-    subtitle: "LINHA CAYO – MOTOS CROSS INFANTIS (PIT BIKES)",
-    agreement: "Estamos cientes dos itens observados na moto cross infantil CAYO, incluindo itens de segurança (corta-corrente, limitador de aceleração e protetores térmicos), suspensões e carenagens, ficando a VENTURA isenta de reclamações posteriores à entrega.",
-    left: [
-      "Paralama dianteiro",
-      "Paralama traseiro",
-      "Plate frontal (Número)",
-      "Carenagem lateral esquerda",
-      "Carenagem lateral direita",
-      "Banco Cross CAYO",
-      "Guidão e protetor de guidão (Bar pad)",
-      "Suspensão dianteira (Bengalas / Garfo)",
-      "Suspensão traseira (Amortecedor Monoshock)",
-      "Limitador de aceleração",
-      "Chave de segurança (Corta-corrente)",
-      "Ferramentas e kit de ajuste"
-    ],
-    right: [
-      "Chave de ignição / Botão de partida",
-      "Pedaleira esquerda",
-      "Pedaleira direita",
-      "Protetor de corrente e guia de corrente",
-      "Escapamento e protetor térmico",
-      "Freio a disco dianteiro (Manete)",
-      "Freio a disco traseiro (Pedal/Manete)",
-      "Descanso lateral (Pezinho)",
-      "Rodas / Pneus Off-Road (Biscoito)",
-      "Pressão e calibragem dos pneus",
-      "Manual do Proprietário CAYO",
-      "Kit de grafismos / adesivos CAYO"
-    ]
-  },
   utv: {
     title: "CHECK LIST – TRANSPORTE DE VEÍCULO NOVO",
-    subtitle: "LINHA UTVs VENTURA (SIDE-BY-SIDE)",
-    agreement: "Estamos cientes dos itens observados na gaiola de proteção, cintos, acessórios e estrutura do UTV Ventura, ficando a empresa isenta de observações ou avarias não registradas neste documento no momento do recebimento.",
+    subtitle: "LINHA UTV's – LINHAI",
+    agreement: "Estamos cientes dos itens observados na gaiola de proteção, cintos, acessórios e estrutura do UTV Linhai, ficando a empresa isenta de observações ou avarias não registradas neste documento no momento do recebimento.",
     left: [
       "Gaiola de proteção (Roll cage)",
       "Porta / Rede lateral direita",
@@ -153,6 +87,72 @@ const DEFAULT_TEMPLATES = {
       "Alavanca de câmbio (P/R/N/H/L)",
       "Porta-luvas e compartimentos impermeáveis",
       "Tração 4x4 / Bloqueio do diferencial"
+    ]
+  },
+  infantil_quad: {
+    title: "CHECK LIST – TRANSPORTE DE VEÍCULO NOVO",
+    subtitle: "LINHA ATV's – KAYO",
+    agreement: "Estamos cientes dos itens observados no quadriciclo Kayo, incluindo dispositivos de segurança obrigatórios (limitador de velocidade e trava de segurança/tether), acessórios e carenagem, ficando a VENTURA isenta de qualquer reclamação posterior à entrega.",
+    left: [
+      "Paralama dianteiro direito",
+      "Paralama dianteiro esquerdo",
+      "Paralama traseiro direito",
+      "Paralama traseiro esquerdo",
+      "Carenagem lateral direita",
+      "Carenagem lateral esquerda",
+      "Parachoque dianteiro",
+      "Banco Kayo",
+      "Protetores de pé fechados (Footwells)",
+      "Ferramentas de ajuste",
+      "Limitador de velocidade no acelerador",
+      "Chave / Trava de segurança (Tether switch)"
+    ],
+    right: [
+      "Chave de partida",
+      "Painel / Indicadores LED",
+      "Pintura em Geral",
+      "Tampa do tanque com trava",
+      "Rodas / Pneus infantis",
+      "Manual do Proprietário Kayo",
+      "Bateria 12V",
+      "Farol dianteiro",
+      "Lanterna traseira",
+      "Comandos do guidão / Freios",
+      "Manopla do freio / trava de estacionamento",
+      "Kit de adesivos decorativos Kayo"
+    ]
+  },
+  infantil_moto: {
+    title: "CHECK LIST – TRANSPORTE DE VEÍCULO NOVO",
+    subtitle: "LINHA MOTO – KAYO",
+    agreement: "Estamos cientes dos itens observados na moto cross Kayo, incluindo itens de segurança (corta-corrente, limitador de aceleração e protetores térmicos), suspensões e carenagens, ficando a VENTURA isenta de reclamações posteriores à entrega.",
+    left: [
+      "Paralama dianteiro",
+      "Paralama traseiro",
+      "Plate frontal (Número)",
+      "Carenagem lateral esquerda",
+      "Carenagem lateral direita",
+      "Banco Cross Kayo",
+      "Guidão e protetor de guidão (Bar pad)",
+      "Suspensão dianteira (Bengalas / Garfo)",
+      "Suspensão traseira (Amortecedor Monoshock)",
+      "Limitador de aceleração",
+      "Chave de segurança (Corta-corrente)",
+      "Ferramentas e kit de ajuste"
+    ],
+    right: [
+      "Chave de ignição / Botão de partida",
+      "Pedaleira esquerda",
+      "Pedaleira direita",
+      "Protetor de corrente e guia de corrente",
+      "Escapamento e protetor térmico",
+      "Freio a disco dianteiro (Manete)",
+      "Freio a disco traseiro (Pedal/Manete)",
+      "Descanso lateral (Pezinho)",
+      "Rodas / Pneus Off-Road (Biscoito)",
+      "Pressão e calibragem dos pneus",
+      "Manual do Proprietário Kayo",
+      "Kit de grafismos / adesivos Kayo"
     ]
   }
 };
