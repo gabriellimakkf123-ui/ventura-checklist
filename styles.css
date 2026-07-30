@@ -1,6 +1,6 @@
 /* ==========================================================================
    VENTURA ADVENTURE SISTEMAS - CHECK-LIST DE VEÍCULOS
-   Design System Otimizado com a Paleta de Cores Ventura Adventure
+   Design System, Reorganização de Campos & Paleta Ventura Adventure
    ========================================================================== */
 
 :root {
@@ -49,21 +49,18 @@
    TEMAS DINÂMICOS DA APLICAÇÃO (data-theme)
    ========================================================================== */
 
-/* Tema 1: Ventura Adventure Oficial (Laranja & Navy Grafite) */
 body[data-theme="corporate"] {
   --bg-app: #08111e;
   --header-bg: linear-gradient(135deg, #0b192c 0%, #172a46 100%);
   --accent-color: #ea580c;
 }
 
-/* Tema 2: Dark Glass Off-Road */
 body[data-theme="dark"] {
   --bg-app: #050912;
   --header-bg: rgba(15, 23, 42, 0.9);
   --accent-color: #f97316;
 }
 
-/* Tema 3: Pátio / Industrial (Laranja de Alta Visibilidade) */
 body[data-theme="industrial"] {
   --bg-app: #18181b;
   --header-bg: rgba(39, 39, 42, 0.95);
@@ -336,14 +333,18 @@ body {
   gap: 0.4rem;
 }
 
-.top-grid {
-  grid-template-columns: 2.2fr 1.3fr 2.5fr;
+.grid-row-3 {
+  grid-template-columns: 1.5fr 1.2fr 1.5fr;
   align-items: center;
 }
 
-.bottom-grid {
-  grid-template-columns: 1.5fr 1fr 2fr 1fr;
-  margin-top: 0.3rem;
+.grid-row-vehicle {
+  grid-template-columns: 1.3fr 1fr 1.5fr 1fr 2.2fr;
+  align-items: center;
+}
+
+.margin-top-sm {
+  margin-top: 0.35rem;
 }
 
 .form-group {
@@ -356,8 +357,8 @@ body {
 }
 
 .form-group label {
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.7rem;
+  font-weight: 800;
   color: var(--text-dark);
   white-space: nowrap;
   margin-right: 0.4rem;
@@ -368,14 +369,10 @@ body {
   background: transparent;
   width: 100%;
   font-family: var(--font-primary);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: #000000;
   outline: none;
-}
-
-.form-group.span-2 {
-  grid-column: span 1;
 }
 
 .fuel-group {
@@ -387,22 +384,22 @@ body {
 
 .fuel-group label {
   font-size: 0.68rem;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .fuel-options {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.4rem;
   width: 100%;
   justify-content: space-between;
 }
 
 .fuel-radio {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
   cursor: pointer;
 }
 

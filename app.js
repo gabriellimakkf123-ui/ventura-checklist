@@ -76,7 +76,7 @@ const DEFAULT_TEMPLATES = {
       "Bateria 12V",
       "Farol dianteiro",
       "Lanterna traseira",
-      "Comandos de guidão / Freios",
+      "Comandos do guidão / Freios",
       "Manopla do freio / trava de estacionamento",
       "Kit de adesivos decorativos CAYO"
     ]
@@ -273,7 +273,7 @@ function createColumnHTML(items) {
   return html;
 }
 
-// Renderizar Espaço do Diagrama em Branco (Placeholder Limpo)
+// Renderizar Espaço do Diagrama em Branco
 function renderDiagram() {
   const container = document.getElementById('diagramsContainer');
   container.innerHTML = `
@@ -354,8 +354,12 @@ function initActionButtons() {
   // Novo Check-List
   document.getElementById('btnNewChecklist').addEventListener('click', () => {
     if (confirm("Deseja limpar todos os campos do check-list atual?")) {
+      document.getElementById('fieldEmpresa').value = '';
+      document.getElementById('fieldCnpj').value = '';
+      document.getElementById('fieldTecnico').value = '';
       document.getElementById('fieldName').value = '';
-      document.getElementById('fieldCpf').value = '';
+      document.getElementById('fieldPhone').value = '';
+      document.getElementById('fieldAddress').value = '';
       document.getElementById('fieldModel').value = '';
       document.getElementById('fieldColor').value = '';
       document.getElementById('fieldChassis').value = '';
@@ -420,7 +424,7 @@ function generateColoredPDF() {
       console.error('Erro ao gerar PDF:', err);
       btn.innerHTML = originalText;
       btn.disabled = false;
-      window.print(); // Fallback para impressão se falhar
+      window.print();
     });
   } else {
     window.print();
